@@ -68,6 +68,12 @@ def dfs(x, y):
                 dfs(nx, ny)
 
 
+
+
+# 時間計測用 開始時間
+_start_time = time.time()
+
+
 lake_count = 0
 for n in range(N):
     for m in range(M):
@@ -78,6 +84,11 @@ for n in range(N):
             lake_count += 1
 
 print(lake_count)
+
+
+# 時間計測用 実行時間
+_elapsed_time = time.time() - _start_time
+print(_elapsed_time * 1000)
 
         
 
