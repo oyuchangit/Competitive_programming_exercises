@@ -23,3 +23,18 @@ N = 5, s = {1, 2, 4, 6, 8}, t = {3, 5, 7, 9, 10}
 3
 '''
 
+import numpy as np
+
+max_N = 100000
+
+# 入力
+N = int(input())
+s = list(map(int, input().split()))
+t = list(map(int, input().split()))
+
+# 仕事をソートするための配列
+itv = [s, t]
+
+for i in range(N):
+
+    print(itv[i, 0])
