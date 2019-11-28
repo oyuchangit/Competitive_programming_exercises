@@ -29,12 +29,10 @@ max_N = 100000
 
 # 入力
 N = int(input())
-s = list(map(int, input().split()))
-t = list(map(int, input().split()))
 
-# 仕事をソートするための配列
-itv = [s, t]
-
+itv = []
 for i in range(N):
 
-    print(itv[i, 0])
+    s, t = map(int, input().split())
+    itv.append([s, t])
+
