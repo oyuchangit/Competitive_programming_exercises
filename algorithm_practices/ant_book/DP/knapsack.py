@@ -25,7 +25,6 @@
 import numpy as np
 
 # 入力
-INF = 100000
 n = int(input())
 W = int(input())
 w_v = []
