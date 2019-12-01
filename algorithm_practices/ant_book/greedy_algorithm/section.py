@@ -29,8 +29,6 @@ N = 5, s = {1, 2, 4, 6, 8}, t = {3, 5, 7, 9, 10}
 3
 '''
 
-import numpy as np
-
 # 入力
 N = int(input())
 
