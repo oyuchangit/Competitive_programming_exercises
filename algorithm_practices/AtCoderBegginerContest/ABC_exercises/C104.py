@@ -2,36 +2,65 @@
 
 D, G = map(int, input().split())
 
-p = []
-c = []
+p = []  # 各点数台の問題数のリスト
+c = []  # 各点数台のコンプリートボーナス
 
+# 各点数台を、完全に解くかどうかのリスト　1問も解かないとして初期化
+solve_completely_list = [False] * D
+
+# 入力処理
 for d in range(D):
     p_i, c_i = map(int, input().split())
     p.append(p_i)
     c.append(c_i)
 
-def dfs(i, total_score, completed_amount, total_completed):
-    if total_score >= G:
-        total_completed.append(completed_amount)
+
+def dfs(i, solve_completely_list, completed_amount_list):
+    if i >= D:
+        is_larger_than_G = False    # フラグ初期化
+        # total_score計算
+        total_score = 0
+        completed_amount = 0
+        for d in range(D):
+            if solve_completely_list[d]:
+                total_score += (d+1) * 100 * p[d] + c[d]
+                completed_amount += p[d]
+
+
+        # total_scoreがGより小さいとき
+        # Gより大きくなるまで、一番大きい配点を足す
+        # 一番大きい配点をp-1個足してもGより小さい場合、諦めて他の枝に移る
+        if total_score < G:
+            # solve_completely_list[D]がTrueのときは、(D-1) * 100を最大の配点とする
+            # ここバグってる！！！！後でなおす！！！！
+            if solve_completely_list[D-1]:
+                max_d = D-1
+            else:
+                max_d = D
+
+            for p_d in range(p[max_d - 1] - 1):
+                total_score += max_d * 100
+                completed_amount += 1
+                if total_score >= G:
+                    is_larger_than_G = True
+                    break
+        else:
+            is_larger_than_G = True
+        
+        if is_larger_than_G:
+            completed_amount_list.append(completed_amount)
         return
     
-    if i == 1:
-        return
 
     # 完全に解く(100i 点の問題を pi 問解く)場合
-    dfs(i-1, total_score + 100*(i) * p[i] + c[i], completed_amount+p[i], total_completed)
+    solve_completely_list[i] = True
+    dfs(i + 1, solve_completely_list, completed_amount_list)
 
     # 1問も解かない場合
-    dfs(i-1, total_score, completed_amount, total_completed)
+    solve_completely_list[i] = False
+    dfs(i + 1, solve_completely_list, completed_amount_list)
 
-    '''
-    # 中途半端に解く(100i 点の問題を 1 問以上 pi − 1 問以下解く)場合
-    for j in range(p[i]-1):
-        dfs(i, total_score + 100*(i+1), completed_amount + 1, total_completed)
-    '''
-
-
-total_completed = []
-dfs(D, 0, 0, total_completed)
-ans = min(total_completed)
+completed_amount_list = []    # 回答した数のリスト
+dfs(0, solve_completely_list, completed_amount_list)
+print(min(completed_amount_list))
 
