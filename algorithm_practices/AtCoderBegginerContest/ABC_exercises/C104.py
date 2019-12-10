@@ -32,14 +32,18 @@ def dfs(i, solve_completely_list, completed_amount_list):
         # 一番大きい配点をp-1個足してもGより小さい場合、諦めて他の枝に移る
         if total_score < G:
             # solve_completely_list[D]がTrueのときは、(D-1) * 100を最大の配点とする
-            # ここバグってる！！！！後でなおす！！！！
-            if solve_completely_list[D-1]:
-                max_d = D-1
-            else:
-                max_d = D
+            # solve_completely_list[i]がFalseであるiのうち最大のiの配点を使う
+            max_d = -1
+            for d_i in reversed(range(D)):
+                if solve_completely_list[d_i] == False:
+                    max_d = d_i
+                    break
+            # 多分ありえないけど一応
+            if max_d == -1:
+                return
 
-            for p_d in range(p[max_d - 1] - 1):
-                total_score += max_d * 100
+            for p_d in range(p[max_d] - 1):
+                total_score += (max_d + 1) * 100
                 completed_amount += 1
                 if total_score >= G:
                     is_larger_than_G = True
