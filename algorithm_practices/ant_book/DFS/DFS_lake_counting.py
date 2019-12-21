@@ -68,8 +68,6 @@ def dfs(x, y):
                 dfs(nx, ny)
 
 
-
-
 # 時間計測用 開始時間
 _start_time = time.time()
 
