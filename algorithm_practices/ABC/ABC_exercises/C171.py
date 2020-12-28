@@ -27,3 +27,4 @@ while N > 0:
 
 print(dog_name[::-1])
 
+# よくわからない
